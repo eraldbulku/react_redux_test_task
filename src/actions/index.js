@@ -20,3 +20,7 @@ export function fetchDeck() {
 export function startGame(data) {
   return { type: actions.START_GAME, payload: data };
 }
+
+export function selectCard(data) {
+  return { type: actions.SELECT_CARD, payload: data };
+}
