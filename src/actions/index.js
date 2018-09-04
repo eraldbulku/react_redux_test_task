@@ -24,3 +24,16 @@ export function startGame(data) {
 export function selectCard(data) {
   return { type: actions.SELECT_CARD, payload: data };
 }
+
+export function getCardFromDeck(deckId, count = 1) {
+  const request = axios.get(`${DECK_CARD_API_URL}/${deckId}/draw/?count=${count}`);
+
+  return (dispatch) => {
+    request.then(({data}) => {
+      dispatch({
+          type: actions.GET_CARD_FROM_DECK,
+          payload: data
+      });
+    });
+  };
+}

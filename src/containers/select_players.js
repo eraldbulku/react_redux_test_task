@@ -40,7 +40,7 @@ class SelectPlayers extends Component {
               <option value="5">5</option>
             </select>
             <span className="input-group-btn">
-              <button className="btn btn-primary startGameBtn" onClick={this.handleStartingGame} tabindex="-1">Start</button>
+              <button className="btn btn-primary startGameBtn" onClick={this.handleStartingGame}>Start</button>
             </span>
           </div>
         </div>

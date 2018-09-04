@@ -38,21 +38,21 @@ class CardContent extends PureComponent {
   }
 
   handleCardSelected = () => {
-    if (this.props.activePlayer !== 0) {
+    // if not human's turn, return
+    if (!this.props.humanCanPlay) {
       return;
     }
     this.setState({ selectedCard: this.props.index });
-    this.props.selectCard({
-      selectedCardCodes: this.props.card.code
-    });
+    this.props.selectCard(this.props.card);
+    this.props.updateHumanPlay(false);
   };
 
   getCardTranslation() {
     // if the card is clicked, send it to the table
     if (this.state.selectedCard === this.props.index) {
       return {
-        x: spring(500, springConfig),
-        y: spring(119, springConfig)
+        x: spring(350, springConfig),
+        y: spring(180, springConfig)
       };
       // else if the game has started deal the cards
     } else if (this.props.isStarted) {

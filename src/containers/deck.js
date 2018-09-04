@@ -1,14 +1,39 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchDeck, selectCard } from "../actions/index";
+import { fetchDeck, selectCard, getCardFromDeck } from "../actions/index";
 import { bindActionCreators } from 'redux';
 
 import CardContent from "../components/card_content";
 
 class Deck extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      numberOfPlayers: 1,
+      humanCanPlay: true,
+    };
+  }
+
   componentDidMount() {
     this.props.fetchDeck();
   }
+
+  componentDidUpdate(prevProps) {
+    if (!this.props.game) return;
+    const { game } = this.props;
+
+    if (game.selectedCards.length > prevProps.game.selectedCards.length) {
+      if (game.selectedCards.length !== Number(game.numberOfPlayers)) {
+        setTimeout(() => {
+          this.props.getCardFromDeck(game.deckId);
+        }, 1000);
+      }
+    }
+  }
+
+  updateHumanPlay = humanCanPlay => {
+    this.setState({ humanCanPlay });
+  };
 
   render() {
     const { cards, isStarted, activePlayer } = this.props.game;
@@ -22,6 +47,8 @@ class Deck extends Component {
             isStarted={isStarted}
             selectCard={this.props.selectCard}
             activePlayer={activePlayer}
+            humanCanPlay={this.state.humanCanPlay}
+            updateHumanPlay={this.updateHumanPlay}
           />
         )
     });
@@ -39,7 +66,8 @@ class Deck extends Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     fetchDeck: fetchDeck,
-    selectCard: selectCard
+    selectCard: selectCard,
+    getCardFromDeck: getCardFromDeck
   }, dispatch);
 }
 

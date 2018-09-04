@@ -1,7 +1,7 @@
 .game_table {
   width: 600px;
   height: 300px;
-  margin: 50px auto;
+  margin: 30px auto 0px auto;
   background: #e75151;
 }
 
@@ -37,4 +37,24 @@ img {
 
 .startGameBtn {
   margin-left: 10px !important;
+}
+
+.human_player {
+  width: 20%;
+}
+
+.players_container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
+.flop img {
+  width: 12%;
+  margin-top: 105px;
+}
+
+.flop img:first-child {
+  margin-left: 28%;
 }
