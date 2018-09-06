@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchDeck, selectCard, getCardFromDeck } from "../actions/index";
+import { fetchDeck, 
+         selectCard,
+         getCardFromDeck, 
+         startNewRound, 
+         calcScores } from "../actions/index";
 import { bindActionCreators } from 'redux';
 
 import CardContent from "../components/card_content";
@@ -26,7 +30,18 @@ class Deck extends Component {
       if (game.selectedCards.length !== Number(game.numberOfPlayers)) {
         setTimeout(() => {
           this.props.getCardFromDeck(game.deckId);
+        }, 500);
+      } else {
+        setTimeout(() => {
+          this.props.calcScores();
         }, 1000);
+        setTimeout(() => {
+          if (game.cards.length === 1) {
+          } else {
+            this.setState({ humanCanPlay: true });
+          }
+          this.props.startNewRound();
+        }, 2000);
       }
     }
   }
@@ -36,7 +51,10 @@ class Deck extends Component {
   };
 
   render() {
-    const { cards, isStarted, activePlayer } = this.props.game;
+    const { cards,
+            isStarted,
+            activePlayer,
+            scores } = this.props.game;
 
     const cardsList = cards.map((card, i) => {
         return (
@@ -47,7 +65,7 @@ class Deck extends Component {
             isStarted={isStarted}
             selectCard={this.props.selectCard}
             activePlayer={activePlayer}
-            humanCanPlay={this.state.humanCanPlay}
+            humanCanPlay={isStarted ? this.state.humanCanPlay : false}
             updateHumanPlay={this.updateHumanPlay}
           />
         )
@@ -67,7 +85,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     fetchDeck: fetchDeck,
     selectCard: selectCard,
-    getCardFromDeck: getCardFromDeck
+    getCardFromDeck: getCardFromDeck,
+    startNewRound: startNewRound,
+    calcScores: calcScores
   }, dispatch);
 }
 

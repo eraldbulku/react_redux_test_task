@@ -5,12 +5,14 @@ import Player from "../components/player";
 
 class GameTable extends Component {
   render() {
-    const { numberOfPlayers, selectedCards } = this.props.game;
-    console.log(selectedCards);
+    const { numberOfPlayers, selectedCards, scores } = this.props.game;
     return (
       <div className="row">
         <div className="col-md-12">
-            <Players numberOfPlayers={numberOfPlayers} />
+            <Players
+              numberOfPlayers={numberOfPlayers}
+              scores={scores}
+            />
             <div className="game_table">
               <div className="flop">
                 {selectedCards.map((card, index) => {
@@ -19,7 +21,7 @@ class GameTable extends Component {
                 })}
               </div>
             </div>
-            <Player human={true} />
+            <Player human={true} score={scores[0]} />
         </div>
       </div>
     );

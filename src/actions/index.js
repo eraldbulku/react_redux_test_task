@@ -37,3 +37,11 @@ export function getCardFromDeck(deckId, count = 1) {
     });
   };
 }
+
+export function startNewRound() {
+  return { type: actions.START_NEW_ROUND };
+}
+
+export function calcScores() {
+  return { type: actions.CALC_SCORES };
+}
