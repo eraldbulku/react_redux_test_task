@@ -15,7 +15,7 @@ const getStyle = (x, y) => {
 };
 
 const getXY = index => {
-  return { y: 400, x: 200 + index * 55 };
+  return { y: 420, x: 250 + index * 55 };
 };
 
 
@@ -52,7 +52,7 @@ class CardContent extends PureComponent {
     if (this.state.selectedCard === this.props.index) {
       return {
         x: spring(350, springConfig),
-        y: spring(180, springConfig)
+        y: spring(205, springConfig)
       };
       // else if the game has started deal the cards
     } else if (this.props.isStarted) {
