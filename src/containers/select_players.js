@@ -13,6 +13,7 @@ class SelectPlayers extends Component {
 
     this.handleStartingGame = this.handleStartingGame.bind(this); // binding function
     this.selectNumberOfPlayers = this.selectNumberOfPlayers.bind(this);
+    this.handleResetGame = this.handleResetGame.bind(this);
   }
 
   handleStartingGame(event) {
@@ -24,10 +25,18 @@ class SelectPlayers extends Component {
     this.setState({ numberOfPlayers: event.target.value });
   }
 
+  handleResetGame() {
+    window.location.reload();
+  }
+
   render() {
     return (
       <div className="row">
-        <div className="col-md-4">
+        <div className={!this.props.game.isStarted ? 'hideElement' : 'col-md-4'}>
+          <br/>
+          <button className="btn btn-primary" onClick={this.handleResetGame}>RESET GAME</button>
+        </div>
+        <div className={this.props.game.isStarted ? 'hideElement' : 'col-md-4'}>
           <p>Select players:</p>
           <div className="input-group">
             <select 
@@ -49,10 +58,14 @@ class SelectPlayers extends Component {
   }
 }
 
+function mapStateToProps(state) {
+    return { game: state.game };
+}
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     startGame: startGame,
   }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(SelectPlayers);
+export default connect(mapStateToProps, mapDispatchToProps)(SelectPlayers);

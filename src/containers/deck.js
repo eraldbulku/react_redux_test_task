@@ -6,8 +6,16 @@ import { fetchDeck,
          startNewRound, 
          calcScores } from "../actions/index";
 import { bindActionCreators } from 'redux';
-
+import Notification from "../services/NotificationService";
+import { getWinnerNotification } from "../helpers/scores";
 import CardContent from "../components/card_content";
+import { WINNER,
+         LOOSER,
+         MSG_WINNER,
+         TITLE_WINNER,
+         TITLE_LOOSER,
+         NEXT_ROUND
+       } from "../config/Constants";
 
 class Deck extends Component {
   constructor(props) {
@@ -37,8 +45,15 @@ class Deck extends Component {
         }, 1000);
         setTimeout(() => {
           if (game.cards.length === 1) {
+            const finalScore = getWinnerNotification(game.scores);
+            if(finalScore.result === WINNER) {
+              Notification.success(finalScore.msg, finalScore.title);
+            } else {
+              Notification.error(finalScore.msg, finalScore.title);
+            }
           } else {
             this.setState({ humanCanPlay: true });
+            Notification.info(NEXT_ROUND);
           }
           this.props.startNewRound();
         }, 2000);

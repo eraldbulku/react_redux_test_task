@@ -1,8 +1,13 @@
+body {
+  background-color: whitesmoke !important;
+}
+
 .game_table {
   width: 600px;
   height: 300px;
   margin: 30px auto 0px auto;
   background: #e75151;
+  border-radius: 50px;
 }
 
 .card_container {
@@ -57,4 +62,8 @@ img {
 
 .flop img:first-child {
   margin-left: 28%;
+}
+
+.hideElement{
+  display: none;
 }
