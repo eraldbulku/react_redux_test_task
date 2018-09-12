@@ -20,27 +20,27 @@ const defaultState = {
   scores: []
 };
 
-export default function(state = defaultState, action) {
-  switch(action.type) {
+export default function(state = defaultState, {type, payload}) {
+  switch(type) {
     case actions.GET_DECK:
       return { ...state, 
-        cards: action.payload.cards,
-        deckId: action.payload.deck_id
+        cards: payload.cards,
+        deckId: payload.deck_id
       };
     case actions.START_GAME:
       return { ...state,
         isStarted: true,
-        numberOfPlayers: action.payload,
-        scores: getInitScores(action.payload)
+        numberOfPlayers: payload,
+        scores: getInitScores(payload)
       };
     case actions.SELECT_CARD:
       return { ...state,
-        selectedCards: [ ...state.selectedCards, action.payload],
+        selectedCards: [ ...state.selectedCards, payload],
         activePlayer: state.activePlayer === state.numberOfPlayers - 1 ? 0 : state.activePlayer + 1
       };
     case actions.GET_CARD_FROM_DECK:
       return { ...state,
-        selectedCards: [ ...state.selectedCards, action.payload.cards[0]],
+        selectedCards: [ ...state.selectedCards, payload.cards[0]],
         activePlayer: state.activePlayer === state.numberOfPlayers - 1 ? 0 : state.activePlayer + 1
       };
     case actions.START_NEW_ROUND:

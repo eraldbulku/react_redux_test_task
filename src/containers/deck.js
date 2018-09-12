@@ -32,20 +32,20 @@ class Deck extends Component {
 
   componentDidUpdate(prevProps) {
     if (!this.props.game) return;
-    const { game } = this.props;
+    const { selectedCards, cards, scores, numberOfPlayers, deckId } = this.props.game;
 
-    if (game.selectedCards.length > prevProps.game.selectedCards.length) {
-      if (game.selectedCards.length !== Number(game.numberOfPlayers)) {
+    if (selectedCards.length > prevProps.game.selectedCards.length) {
+      if (selectedCards.length !== Number(numberOfPlayers)) {
         setTimeout(() => {
-          this.props.getCardFromDeck(game.deckId);
+          this.props.getCardFromDeck(deckId);
         }, 500);
       } else {
         setTimeout(() => {
           this.props.calcScores();
         }, 1000);
         setTimeout(() => {
-          if (game.cards.length === 1) {
-            const finalScore = getWinnerNotification(game.scores);
+          if (cards.length === 1) {
+            const finalScore = getWinnerNotification(scores);
             if(finalScore.result === WINNER) {
               Notification.success(finalScore.msg, finalScore.title);
             } else {
@@ -98,11 +98,11 @@ class Deck extends Component {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    fetchDeck: fetchDeck,
-    selectCard: selectCard,
-    getCardFromDeck: getCardFromDeck,
-    startNewRound: startNewRound,
-    calcScores: calcScores
+    fetchDeck,
+    selectCard,
+    getCardFromDeck,
+    startNewRound,
+    calcScores
   }, dispatch);
 }
 
